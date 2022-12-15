@@ -13,8 +13,7 @@ repositories {
 static def getRuneLiteVersion() {
     URL url = new URL("http://repo.runelite.net/net/runelite/client/maven-metadata.xml")
     URLConnection urlConnection = url.openConnection()
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-            urlConnection.getInputStream()))
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))
     String latestName = null
     String inputLine
     while ((inputLine = bufferedReader.readLine()) != null) {
@@ -44,17 +43,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.slf4j:slf4j-simple:1.7.36'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.5'
     testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion, {
         exclude group: 'ch.qos.logback', module: 'logback-classic'
     }
 
     implementation group: 'javassist', name: 'javassist', version: '3.12.1.GA'
     implementation group: 'net.sf.jopt-simple', name:'jopt-simple', version: '5.0.4'
-
-    // jython stuff:
-    // https://mavenlibs.com/maven/dependency/org.python/jython-standalone
-    implementation group: 'org.python', name: 'jython-standalone', version: '2.7.3'
 }
 
 sourceSets {
@@ -86,20 +81,6 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     //options.deprecation = true
 }
-
-task connectedVPN {
-    def nord = "nordvpn status".execute().text.trim()
-    if (nord.find("Status: Connected") != null) {
-        println "connected to VPN"
-
-    } else {
-        println "NOT connected to VPN"
-        println "NOT connected to VPN"
-        println "NOT connected to VPN"
-        throw new GradleException('NOT Connected')
-   }
-}
-
 task botRun(type: JavaExec) {
     group = "Execution"
     description = "Runs the main method within RSB"
@@ -108,6 +89,5 @@ task botRun(type: JavaExec) {
     jvmArgs "-debug"
     args "--bot-runelite --developer-mode".split(" ")
 
-    dependsOn(connectedVPN)
     dependsOn(jar)
 }
