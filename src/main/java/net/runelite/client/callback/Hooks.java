@@ -362,6 +362,12 @@ public class Hooks implements Callbacks
 		// Draw clientUI overlays
 		clientUi.paintOverlays(graphics2d);
 
+		// KKK This is the virtual mouse cursor
+		if (bot.getInputManager() != null) {
+			graphics2d.setColor(Color.red);
+			graphics2d.drawOval(bot.getInputManager().getX() - 7, bot.getInputManager().getY() - 7, 14, 14);
+		}
+
 		if (client.isGpu())
 		{
 			// processDrawComplete gets called on GPU by the gpu plugin at the end of its
@@ -411,15 +417,6 @@ public class Hooks implements Callbacks
 		else
 		{
 			finalImage = image;
-		}
-
-        // KKK This is the virtual mouse cursor
-		if (bot.getInputManager() != null) {
-			Graphics2D g2 = (Graphics2D) finalImage.getGraphics();
-			g2.setColor(Color.red);
-			g2.drawOval(bot.getInputManager().getX() - 7,
-						bot.getInputManager().getY() - 7,
-						14, 14);
 		}
 
         // Draw the image onto the game canvas
