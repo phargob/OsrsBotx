@@ -366,6 +366,7 @@ public class Hooks implements Callbacks
 		if (bot.getInputManager() != null) {
 			graphics2d.setColor(Color.red);
 			graphics2d.drawOval(bot.getInputManager().getX() - 7, bot.getInputManager().getY() - 7, 14, 14);
+			graphics2d.fillOval(bot.getInputManager().getX() - 2, bot.getInputManager().getY() - 2, 4, 4);
 		}
 
 		if (client.isGpu())
